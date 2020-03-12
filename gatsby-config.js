@@ -67,7 +67,7 @@ module.exports = {
               })),
             query: `
             {
-                allWordpressPost(limit: 1000, sort: {fields: date, order: DESC}, filter: {title: {regex: "/^((?!dummy).)*$/igm"}}) {
+                allWordpressPost(limit: 1000, sort: {fields: date, order: DESC}, filter: {title: {regex: "/^((?!dummy).)*$/im"}}) {
                 edges {
                   node {
                     content

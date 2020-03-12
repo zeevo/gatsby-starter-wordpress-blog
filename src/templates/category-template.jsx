@@ -49,7 +49,7 @@ export const pageQuery = graphql`
     allWordpressPost(
       limit: 1000
       sort: { order: DESC, fields: date }
-      filter: { title: { regex: "/^((?!dummy).)*$/igm" } }
+      filter: { title: { regex: "/^((?!dummy).)*$/im" } }
     ) {
       edges {
         node {
