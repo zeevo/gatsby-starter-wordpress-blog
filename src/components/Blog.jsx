@@ -4,11 +4,12 @@ import parse from 'html-react-parser';
 import Header from './Header';
 import Categories from './Categories';
 import Feed from './Feed';
+import Footer from './Footer';
 
 const Blog = props => {
   const { data } = props;
 
-  const { menu } = data.site.siteMetadata;
+  const { menu, author } = data.site.siteMetadata;
   const { name, description } = data.wordpressSiteMetadata;
 
   const categories = data.allWordpressPost.edges
@@ -25,6 +26,7 @@ const Blog = props => {
       </Header>
       <main className="container container--narrow js-blog-posts">
         <Feed posts={data.allWordpressPost.edges} />
+        <Footer twitter={author.twitter} rss="rss.xml" />
       </main>
     </React.Fragment>
   );
