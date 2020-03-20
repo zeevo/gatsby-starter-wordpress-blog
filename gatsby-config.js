@@ -197,7 +197,6 @@ module.exports = {
     {
       resolve: 'gatsby-source-wordpress',
       options: {
-        // baseUrl: 'http://ec2-3-15-175-195.us-east-2.compute.amazonaws.com/blog/index.php/',
         baseUrl: 'https://admin.zeevo.me/',
         protocol: 'http',
         hostingWPCOM: false,
