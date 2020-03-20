@@ -4,6 +4,34 @@
 
 Another blog starter with enough features to be production ready out of the box
 
+## Setup
+
+1. Configure `gastby-config.js`
+
+```js
+    {
+      resolve: 'gatsby-source-wordpress',
+      options: {
+        baseUrl: 'http://wptestgatsby.local/', // Change me to your wordpress location
+        protocol: 'http', // Me too!
+        hostingWPCOM: false,
+        useACF: true,
+        verboseOutput: false,
+      },
+    },
+```
+
+2. Configure [Wordpress ACF](https://www.advancedcustomfields.com/)
+
+   There is **one** ACF field you need to add for this app to function.
+
+   - **description**
+
+     - _type_ - text
+     - _name_ - desciption
+     - _required_ - yes
+     - _location_ - posts or pages
+
 ## Features
 
 - Easily have custom background images on a post by post basis
