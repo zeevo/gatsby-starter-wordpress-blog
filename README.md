@@ -95,7 +95,3 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 15. **`README.md`**: This file! Edit me to make it yours!
 
 16. **`yarn.lock`**: A file useful for the package manager Yarn (like package-lock.json). Feel free to remove this if you are using NPM. **(You won’t change this file directly).**
-
-# Wordpress support
-
-checkout the branch `feat/wordpress-support` for a wordpress version!
