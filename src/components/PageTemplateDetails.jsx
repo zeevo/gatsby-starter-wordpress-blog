@@ -2,10 +2,11 @@ import React from 'react';
 import Header from './Header';
 import Categories from './Categories';
 import background from '../assets/background.jpg';
+import Footer from './Footer';
 
 const PageTemplateDetails = props => {
   const { data } = props;
-  const { menu } = data.site.siteMetadata;
+  const { menu, author } = data.site.siteMetadata;
   const { title, content, featured_media: featuredMedia } = data.wordpressPage;
 
   const categories = data.allWordpressPost.distinct.filter(
@@ -29,6 +30,7 @@ const PageTemplateDetails = props => {
           />
         </section>
       </article>
+      <Footer author={author} />
     </React.Fragment>
   );
 };

@@ -7,7 +7,7 @@ import Footer from './Footer';
 
 const PostTemplateDetails = props => {
   const { data } = props;
-  const { menu, author } = data.site.siteMetadata;
+  const { menu, author, rss, twitter } = data.site.siteMetadata;
   const { name } = author;
   const { title, date, content, featured_media: featuredMedia } = data.wordpressPost;
 
@@ -38,8 +38,8 @@ const PostTemplateDetails = props => {
             </Link>
           </div>
         </article>
-        <Footer />
       </main>
+      <Footer author={author} />
     </React.Fragment>
   );
 };

@@ -2,11 +2,12 @@ import React from 'react';
 import Header from './Header';
 import Categories from './Categories';
 import Feed from './Feed';
+import Footer from './Footer';
 
 const CategoryTemplateDetails = props => {
   const { data, pageContext } = props;
   const { category } = pageContext;
-  const { menu } = data.site.siteMetadata;
+  const { menu, author } = data.site.siteMetadata;
 
   const categories = data.allWordpressPost.edges
     .map(edge => edge.node.categories)
@@ -28,6 +29,7 @@ const CategoryTemplateDetails = props => {
       <main className="container container--narrow">
         <Feed posts={filteredPosts} />
       </main>
+      <Footer author={author} />
     </React.Fragment>
   );
 };

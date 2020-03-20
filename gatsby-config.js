@@ -31,6 +31,8 @@ module.exports = {
     author: {
       name: "Shane O'Neill",
       twitter: 'https://twitter.com/zeevosec',
+      avatar: 'https://s.gravatar.com/avatar/1d100d4a7d44d7fa5d41a5dd02d2bd6e?s=80',
+      motto: 'Hack the Planet',
     },
   },
   plugins: [

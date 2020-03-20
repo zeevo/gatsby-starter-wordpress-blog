@@ -26,8 +26,8 @@ const Blog = props => {
       </Header>
       <main className="container container--narrow js-blog-posts">
         <Feed posts={data.allWordpressPost.edges} />
-        <Footer twitter={author.twitter} rss="rss.xml" />
       </main>
+      <Footer author={author} rss="rss.xml" />
     </React.Fragment>
   );
 };

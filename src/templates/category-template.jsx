@@ -38,6 +38,8 @@ export const pageQuery = graphql`
         author {
           name
           twitter
+          avatar
+          motto
         }
       }
     }
