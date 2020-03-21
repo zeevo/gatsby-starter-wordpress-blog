@@ -9,7 +9,7 @@ import Footer from './Footer';
 const Blog = props => {
   const { data } = props;
 
-  const { menu, author } = data.site.siteMetadata;
+  const { menu, author, adminUrl, rss } = data.site.siteMetadata;
   const { name, description } = data.wordpressSiteMetadata;
 
   const categories = data.allWordpressPost.edges
@@ -27,7 +27,7 @@ const Blog = props => {
       <main className="container container--narrow js-blog-posts">
         <Feed posts={data.allWordpressPost.edges} />
       </main>
-      <Footer author={author} rss="rss.xml" />
+      <Footer author={author} adminUrl={adminUrl} rss={rss} />
     </React.Fragment>
   );
 };

@@ -36,6 +36,8 @@ export const pageQuery = graphql`
         title
         subtitle
         copyright
+        adminUrl
+        rss
         menu {
           label
           path
@@ -43,6 +45,8 @@ export const pageQuery = graphql`
         author {
           name
           twitter
+          avatar
+          motto
         }
       }
     }

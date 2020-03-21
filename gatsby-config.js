@@ -11,6 +11,8 @@ module.exports = {
     subtitle: '',
     copyright: '© All rights reserved.',
     profilePic: './src/pages/photo.jpg',
+    adminUrl: 'https://admin.zeevo.me/wp-admin',
+    rss: '/rss.xml',
     menu: [
       {
         label: 'Twitter',

@@ -34,6 +34,8 @@ export const pageQuery = graphql`
         subtitle
         copyright
         profilePic
+        adminUrl
+        rss
         menu {
           label
           path

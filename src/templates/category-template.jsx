@@ -30,6 +30,8 @@ export const pageQuery = graphql`
       siteMetadata {
         copyright
         profilePic
+        adminUrl
+        rss
         menu {
           label
           path

@@ -7,7 +7,7 @@ import Footer from './Footer';
 const CategoryTemplateDetails = props => {
   const { data, pageContext } = props;
   const { category } = pageContext;
-  const { menu, author } = data.site.siteMetadata;
+  const { menu, author, adminUrl, rss } = data.site.siteMetadata;
 
   const categories = data.allWordpressPost.edges
     .map(edge => edge.node.categories)
@@ -29,7 +29,7 @@ const CategoryTemplateDetails = props => {
       <main className="container container--narrow">
         <Feed posts={filteredPosts} />
       </main>
-      <Footer author={author} />
+      <Footer author={author} rss={rss} adminUrl={adminUrl} />
     </React.Fragment>
   );
 };

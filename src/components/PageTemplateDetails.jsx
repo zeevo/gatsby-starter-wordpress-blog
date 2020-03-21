@@ -6,7 +6,7 @@ import Footer from './Footer';
 
 const PageTemplateDetails = props => {
   const { data } = props;
-  const { menu, author } = data.site.siteMetadata;
+  const { menu, author, adminUrl, rss } = data.site.siteMetadata;
   const { title, content, featured_media: featuredMedia } = data.wordpressPage;
 
   const categories = data.allWordpressPost.distinct.filter(
@@ -30,7 +30,7 @@ const PageTemplateDetails = props => {
           />
         </section>
       </article>
-      <Footer author={author} />
+      <Footer author={author} rss={rss} adminUrl={adminUrl} />
     </React.Fragment>
   );
 };
