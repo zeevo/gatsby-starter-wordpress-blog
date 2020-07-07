@@ -6,15 +6,15 @@ import CategoryTemplateDetails from '../components/CategoryTemplateDetails';
 
 const CategoryTemplate = props => {
   const { data, pageContext } = props;
-  const { name } = data.wordpressSiteMetadata;
+  const { title } = data.wp.generalSettings;
   const { category } = pageContext;
 
   return (
     <Layout>
       <div>
         <Helmet>
-          <title>{`${category} - ${name}`}</title>
-          <meta name="description" content={`${name} - ${category}`} />
+          <title>{`${category} - ${title}`}</title>
+          <meta name="description" content={`${title} - ${category}`} />
         </Helmet>
         <CategoryTemplateDetails {...props} />
       </div>
@@ -25,11 +25,9 @@ const CategoryTemplate = props => {
 export default CategoryTemplate;
 
 export const pageQuery = graphql`
-  query {
+  query($category: String!) {
     site {
       siteMetadata {
-        copyright
-        profilePic
         adminUrl
         rss
         menu {
@@ -41,46 +39,56 @@ export const pageQuery = graphql`
           name
           twitter
           avatar
-          motto
         }
       }
     }
-    wordpressSiteMetadata {
-      name
-      home
-      description
-    }
-    allWordpressPost(
-      limit: 1000
-      sort: { order: DESC, fields: date }
-      filter: { title: { regex: "/^((?!dummy).)*$/im" } }
-    ) {
-      edges {
-        node {
-          title
-          date
-          excerpt
-          type
-          slug
-          author {
-            name
+    wp {
+      generalSettings {
+        title
+        description
+      }
+      posts(where: { categoryName: $category }) {
+        edges {
+          node {
+            title
+            date
+            excerpt
+            slug
+            author {
+              node {
+                name
+              }
+            }
+            categories {
+              edges {
+                node {
+                  name
+                }
+              }
+            }
+            featuredImage {
+              node {
+                sourceUrl
+                title
+              }
+            }
           }
-          categories {
-            name
-          }
-          featured_media {
-            source_url
+        }
+      }
+      pages {
+        edges {
+          node {
+            id
+            slug
             title
           }
         }
       }
-    }
-    allWordpressPage {
-      edges {
-        node {
-          id
-          slug
-          title
+      categories {
+        edges {
+          node {
+            name
+          }
         }
       }
     }

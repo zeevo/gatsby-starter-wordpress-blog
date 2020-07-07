@@ -3,8 +3,9 @@ import React from 'react';
 import Avatar from './Avatar';
 
 const Footer = props => {
-  const { author, adminUrl } = props;
-  const { twitter, rss, avatar, motto, name } = author;
+  const { author, adminUrl, rss } = props;
+  const { twitter, avatar, motto, name } = author;
+
   return (
     <footer className="container container--narrow js-blog-posts" style={{ marginBottom: '10px' }}>
       <Avatar avatar={avatar} motto={motto} name={name} twitter={twitter} />

@@ -5,17 +5,15 @@ import Header from '../components/Header';
 import Categories from '../components/Categories';
 
 const NotFoundRoute = props => {
-  const { data } = props;
-
-  const { menu } = data.site.siteMetadata;
-
-  const categories = data.allWordpressPost.distinct.filter(
-    name => name.toLowerCase() !== 'uncategorized'
-  );
+  const { site, wp } = props.data;
+  const { menu } = site.siteMetadata;
+  const categories = wp.categories.edges
+    .map(edge => edge.node.name)
+    .filter(name => name !== 'Uncategorized');
 
   return (
     <Layout>
-      <Header menu={menu} title={'Page not found...'}>
+      <Header menu={menu} title="Page not found...">
         <Categories categories={categories} />
       </Header>
       <article className="post">
@@ -35,7 +33,6 @@ export const pageQuery = graphql`
       siteMetadata {
         title
         subtitle
-        copyright
         adminUrl
         rss
         menu {
@@ -45,13 +42,17 @@ export const pageQuery = graphql`
         author {
           name
           twitter
-          avatar
-          motto
         }
       }
     }
-    allWordpressPost {
-      distinct(field: categories___name)
+    wp {
+      categories {
+        edges {
+          node {
+            name
+          }
+        }
+      }
     }
   }
 `;

@@ -5,22 +5,23 @@ import background from '../assets/background.jpg';
 import Footer from './Footer';
 
 const PageTemplateDetails = props => {
-  const { data } = props;
-  const { menu, author, adminUrl, rss } = data.site.siteMetadata;
-  const { title, content, featured_media: featuredMedia } = data.wordpressPage;
+  const { site, wp } = props.data;
+  const { menu, author, adminUrl, rss } = site.siteMetadata;
+  const { page, categories } = wp;
+  const { title, content, featuredMedia } = page;
 
-  const categories = data.allWordpressPost.distinct.filter(
-    name => name.toLowerCase() !== 'uncategorized'
-  );
+  const categoryNames = categories.edges
+    .map(edge => edge.node.name)
+    .filter(name => name !== 'Uncategorized');
 
   return (
-    <React.Fragment>
+    <>
       <Header
         menu={menu}
         background={featuredMedia ? featuredMedia.source_url : background}
         title={title}
       >
-        <Categories categories={categories} />
+        <Categories categories={categoryNames} />
       </Header>
       <article className="post">
         <section className="longform drop container container--narrow">
@@ -31,7 +32,7 @@ const PageTemplateDetails = props => {
         </section>
       </article>
       <Footer author={author} rss={rss} adminUrl={adminUrl} />
-    </React.Fragment>
+    </>
   );
 };
 

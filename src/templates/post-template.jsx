@@ -5,9 +5,11 @@ import Layout from '../components/Layout';
 import PostTemplateDetails from '../components/PostTemplateDetails';
 
 const PostTemplate = props => {
-  const { data } = props;
-  const { title: siteTitle } = data.site.siteMetadata;
-  const { title: postTitle, description = '', tags } = data.wordpressPost;
+  const { wp } = props.data;
+  const { title: siteTitle } = wp.generalSettings;
+  const { title: postTitle, tags, description = '' } = wp.post;
+
+  const tagNames = tags.edges;
 
   return (
     <Layout>
@@ -15,7 +17,7 @@ const PostTemplate = props => {
         <Helmet>
           <title>{`${postTitle} - ${siteTitle}`}</title>
           <meta name="description" content={description} />
-          <meta name="tags" {...(tags ? { content: tags.join(',') } : {})} />
+          <meta name="tags" {...(tags ? { content: tagNames.join(',') } : {})} />
         </Helmet>
         <PostTemplateDetails {...props} />
       </div>
@@ -26,13 +28,11 @@ const PostTemplate = props => {
 export default PostTemplate;
 
 export const pageQuery = graphql`
-  query($id: String!) {
+  query($id: ID!) {
     site {
       siteMetadata {
         title
         subtitle
-        copyright
-        profilePic
         adminUrl
         rss
         menu {
@@ -44,46 +44,62 @@ export const pageQuery = graphql`
           name
           twitter
           avatar
-          motto
         }
       }
     }
-    wordpressPost(id: { eq: $id }) {
-      id
-      title
-      date
-      excerpt
-      content
-      type
-      slug
-      acf {
-        description
-      }
-      author {
-        name
-      }
-      categories {
-        name
-      }
-      featured_media {
-        source_url
+    wp {
+      generalSettings {
         title
       }
-      tags {
-        name
-      }
-    }
-    allWordpressPage {
-      edges {
-        node {
-          id
-          slug
-          title
+      pages {
+        edges {
+          node {
+            id
+            slug
+            title
+          }
         }
       }
-    }
-    allWordpressPost {
-      distinct(field: categories___name)
+      post(id: $id) {
+        id
+        title
+        date
+        excerpt
+        content
+        slug
+        author {
+          node {
+            name
+          }
+        }
+        categories {
+          edges {
+            node {
+              name
+            }
+          }
+        }
+        featuredImage {
+          node {
+            sourceUrl
+            title
+          }
+        }
+        tags {
+          edges {
+            node {
+              name
+            }
+          }
+        }
+      }
+      categories {
+        edges {
+          node {
+            name
+          }
+        }
+      }
     }
   }
 `;

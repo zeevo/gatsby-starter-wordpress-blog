@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 
 const PostPreview = ({ post }) => {
-  const { title, date, excerpt, slug } = post.node;
+  const { title, date, excerpt, slug } = post;
 
   const uri = `/${moment(new Date(date)).format('YYYY/MM/DD')}/${slug}`;
 

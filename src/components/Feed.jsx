@@ -11,13 +11,12 @@ const Feed = props => {
       </p>
     );
   }
-  console.log(props);
   return (
-    <React.Fragment>
-      {posts.map(edge => (
-        <PostPreview key={edge.node.slug} post={edge} />
+    <>
+      {posts.map(post => (
+        <PostPreview key={post.slug} post={post} />
       ))}
-    </React.Fragment>
+    </>
   );
 };
 

@@ -6,17 +6,16 @@
     "graphql": true
   },
   "rules": {
+    "arrow-body-style": ["error", "as-needed", { "requireReturnForObjectLiteral": true }],
     "arrow-parens": ["error", "as-needed"],
-    "comma-dangle": [
+    "max-len": [
       "error",
       {
-        "arrays": "only-multiline",
-        "objects": "only-multiline",
-        "imports": "only-multiline",
-        "exports": "only-multiline",
-        "functions": "only-multiline"
+        "code": 100,
+        "tabWidth": 2
       }
     ],
+    "comma-dangle": ["error", "always-multiline"],
     "function-paren-newline": "off",
     "no-console": "off",
     "prefer-destructuring": "off",
@@ -26,8 +25,7 @@
     "react/jsx-filename-extension": "off",
     "react/prefer-stateless-function": "off",
     "react/prop-types": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/jsx-fragments": "off",
-    "react/no-danger": "off"
+    "react/destructuring-assignment": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }

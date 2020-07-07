@@ -7,14 +7,14 @@ import Layout from '../components/Layout';
 import Blog from '../components/Blog';
 
 const IndexRoute = props => {
-  const { data } = props;
-  const { name, description } = data.wordpressSiteMetadata;
+  const { wp } = props.data;
+  const { title, description } = wp.generalSettings;
 
   return (
     <Layout>
       <div>
         <Helmet>
-          <title>{parse(name)}</title>
+          <title>{parse(title)}</title>
           <meta name="description" content={parse(description)} />
         </Helmet>
         <div />
@@ -32,8 +32,6 @@ export const pageQuery = graphql`
       siteMetadata {
         title
         subtitle
-        copyright
-        profilePic
         adminUrl
         rss
         menu {
@@ -45,45 +43,58 @@ export const pageQuery = graphql`
           name
           twitter
           avatar
-          motto
         }
       }
     }
-    wordpressSiteMetadata {
-      name
-      home
-      description
-    }
-    allWordpressPost(
-      sort: { order: DESC, fields: date }
-      filter: { title: { regex: "/^((?!dummy).)*$/im" } }
-    ) {
-      edges {
-        node {
-          title
-          date
-          excerpt
-          type
-          slug
-          author {
-            name
+
+    wp {
+      generalSettings {
+        title
+        description
+      }
+
+      posts {
+        edges {
+          node {
+            title
+            date
+            excerpt
+            slug
+            author {
+              node {
+                name
+              }
+            }
+            categories {
+              edges {
+                node {
+                  name
+                }
+              }
+            }
+            featuredImage {
+              node {
+                sourceUrl
+                title
+              }
+            }
           }
-          categories {
-            name
-          }
-          featured_media {
-            source_url
+        }
+      }
+      pages {
+        edges {
+          node {
+            id
+            slug
             title
           }
         }
       }
-    }
-    allWordpressPage {
-      edges {
-        node {
-          id
-          slug
-          title
+      categories {
+        edges {
+          node {
+            name
+          }
         }
       }
     }

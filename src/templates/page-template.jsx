@@ -7,15 +7,15 @@ import Layout from '../components/Layout';
 import PageTemplateDetails from '../components/PageTemplateDetails';
 
 const PageTemplate = props => {
-  const { data } = props;
-  const { name } = data.wordpressSiteMetadata;
-  const { title: postTitle, description = '', tags } = data.wordpressPage;
+  const { wp } = props.data;
+  const { title } = wp.generalSettings;
+  const { title: postTitle, description = '', tags } = wp.page;
 
   return (
     <Layout>
       <div>
         <Helmet>
-          <title>{`${postTitle} - ${parse(name)}`}</title>
+          <title>{`${postTitle} - ${parse(title)}`}</title>
           <meta name="description" content={parse(description)} />
           <meta name="tags" {...(tags ? { content: tags.join(',') } : {})} />
         </Helmet>
@@ -28,11 +28,9 @@ const PageTemplate = props => {
 export default PageTemplate;
 
 export const pageQuery = graphql`
-  query($id: String!) {
+  query($id: ID!) {
     site {
       siteMetadata {
-        copyright
-        profilePic
         adminUrl
         rss
         menu {
@@ -44,41 +42,26 @@ export const pageQuery = graphql`
           name
           twitter
           avatar
-          motto
         }
       }
     }
-    wordpressSiteMetadata {
-      name
-      description
-    }
-    wordpressPage(id: { eq: $id }) {
-      id
-      title
-      date
-      excerpt
-      content
-      type
-      slug
-      author {
-        name
+    wp {
+      generalSettings {
+        title
+        description
       }
-      featured_media {
-        source_url
+      page(id: $id) {
+        id
+        slug
         title
       }
-    }
-    allWordpressPage {
-      edges {
-        node {
-          id
-          slug
-          title
+      categories {
+        edges {
+          node {
+            name
+          }
         }
       }
-    }
-    allWordpressPost {
-      distinct(field: categories___name)
     }
   }
 `;

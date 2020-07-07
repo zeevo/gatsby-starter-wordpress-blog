@@ -6,25 +6,26 @@ import background from '../assets/background.jpg';
 import Footer from './Footer';
 
 const PostTemplateDetails = props => {
-  const { data } = props;
-  const { menu, author, adminUrl, rss } = data.site.siteMetadata;
+  const { wp, site } = props.data;
+  const { menu, author, adminUrl, rss } = site.siteMetadata;
   const { name } = author;
-  const { title, date, content, featured_media: featuredMedia } = data.wordpressPost;
+  const { post, categories } = wp;
+  const { title, date, content, featuredMedia } = post;
 
-  const categories = data.allWordpressPost.distinct.filter(
-    category => category.toLowerCase() !== 'uncategorized'
-  );
+  const categoryNames = categories.edges
+    .map(edge => edge.node.name)
+    .filter(category => category !== 'Uncategorized');
 
   return (
-    <React.Fragment>
+    <>
       <Header
         date={date}
-        background={featuredMedia ? featuredMedia.source_url : background}
+        background={featuredMedia ? featuredMedia.sourceUrl : background}
         title={title}
         subtitle={name}
         menu={menu}
       >
-        <Categories categories={categories} />
+        <Categories categories={categoryNames} />
       </Header>
       <main className="container container--narrow js-blog-posts">
         <article className="post">
@@ -40,7 +41,7 @@ const PostTemplateDetails = props => {
         </article>
       </main>
       <Footer author={author} rss={rss} adminUrl={adminUrl} />
-    </React.Fragment>
+    </>
   );
 };
 

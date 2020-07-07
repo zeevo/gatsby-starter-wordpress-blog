@@ -11,36 +11,43 @@ exports.createPages = ({ graphql, actions }) => {
   return new Promise((resolve, reject) => {
     const postTemplate = path.resolve('./src/templates/post-template.jsx');
     const pageTemplate = path.resolve('./src/templates/page-template.jsx');
-    const tagTemplate = path.resolve('./src/templates/tag-template.jsx');
     const categoryTemplate = path.resolve('./src/templates/category-template.jsx');
 
     graphql(`
-      {
-        allWordpressPost(
-          sort: { fields: [date] }
-          filter: { title: { regex: "/^((?!dummy).)*$/im" } }
-        ) {
-          edges {
-            node {
-              id
-              date
-              title
-              slug
-              type
-              categories {
-                name
+      query {
+        wp {
+          posts {
+            edges {
+              node {
+                id
+                title
+                slug
+                date
+                categories {
+                  edges {
+                    node {
+                      name
+                    }
+                  }
+                }
               }
             }
           }
-        }
-        allWordpressPage(sort: { fields: [date] }) {
-          edges {
-            node {
-              id
-              date
-              slug
-              title
-              type
+          pages {
+            edges {
+              node {
+                id
+                date
+                slug
+                title
+              }
+            }
+          }
+          categories {
+            edges {
+              node {
+                name
+              }
             }
           }
         }
@@ -49,75 +56,50 @@ exports.createPages = ({ graphql, actions }) => {
       if (result.errors) {
         console.log(result.errors);
         reject(result.errors);
-      }
+      } else {
+        const { posts, pages, categories } = result.data.wp;
 
-      const allContent = result.data.allWordpressPost.edges.concat(
-        result.data.allWordpressPage.edges
-      );
+        const sortedPosts = posts.edges
+          .map(edge => edge.node)
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
+        const sortedPages = pages.edges
+          .map(edge => edge.node)
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-      const sortedAllContent = allContent.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-      _.each(sortedAllContent, edge => {
-        const { date } = edge.node;
-        const { slug } = edge.node;
-        const preSlug = moment(new Date(date)).format('YYYY/MM/DD');
-        const formattedURI = `${preSlug}/${slug}`;
-        if (_.get(edge, 'node.type') === 'page') {
-          createPage({
-            path: slug,
-            component: slash(pageTemplate),
-            context: { id: edge.node.id, background: edge.node.background, uri: slug },
-          });
-        } else if (_.get(edge, 'node.type') === 'post') {
+        sortedPosts.forEach(post => {
+          const { date, slug } = post;
+          const preSlug = moment(new Date(date)).format('YYYY/MM/DD');
+          const formattedURI = `${preSlug}/${slug}`;
           createPage({
             path: formattedURI,
             component: slash(postTemplate),
-            context: { id: edge.node.id, uri: formattedURI },
+            context: { id: post.id, uri: formattedURI },
           });
+        });
 
-          if (_.get(edge, 'node.categories') && _.get(edge, 'node.categories').length) {
-            _.uniq(_.get(edge, 'node.categories'))
-              .map(category => category.name)
-              .filter(category => category.toLowerCase() !== 'uncategorized')
-              .forEach(category => {
-                const categoryPath = `/categories/${_.kebabCase(category)}/`;
-                createPage({
-                  path: categoryPath,
-                  component: categoryTemplate,
-                  context: { category },
-                });
-              });
-          }
-        }
-      });
+        sortedPages.forEach(post => {
+          const { date, slug } = post;
+          const preSlug = moment(new Date(date)).format('YYYY/MM/DD');
+          const formattedURI = `${preSlug}/${slug}`;
+          createPage({
+            path: formattedURI,
+            component: slash(pageTemplate),
+            context: { id: post.id, uri: formattedURI },
+          });
+        });
 
-      resolve();
+        categories.edges.forEach(edge => {
+          const name = edge.node.name;
+          const categoryPath = `/categories/${_.kebabCase(name)}/`;
+          createPage({
+            path: categoryPath,
+            component: categoryTemplate,
+            context: { category: name },
+          });
+        });
+
+        resolve();
+      }
     });
   });
-};
-
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions;
-
-  if (node.internal.type === 'File') {
-    const parsedFilePath = path.parse(node.absolutePath);
-    const slug = `/${parsedFilePath.dir.split('---')[1]}/`;
-    createNodeField({ node, name: 'slug', value: slug });
-  } else if (node.internal.type === 'MarkdownRemark' && typeof node.slug === 'undefined') {
-    const fileNode = getNode(node.parent);
-    let slug = fileNode.fields.slug;
-    if (typeof node.frontmatter.path !== 'undefined') {
-      slug = node.frontmatter.path;
-    }
-    createNodeField({
-      node,
-      name: 'slug',
-      value: slug,
-    });
-
-    if (typeof node.frontmatter.category !== 'undefined') {
-      const categorySlug = `/categories/${_.kebabCase(node.frontmatter.category)}/`;
-      createNodeField({ node, name: 'categorySlug', value: categorySlug });
-    }
-  }
 };

@@ -7,28 +7,27 @@ import Feed from './Feed';
 import Footer from './Footer';
 
 const Blog = props => {
-  const { data } = props;
+  const { wp, site } = props.data;
 
-  const { menu, author, adminUrl, rss } = data.site.siteMetadata;
-  const { name, description } = data.wordpressSiteMetadata;
+  const { menu, author, adminUrl, rss } = site.siteMetadata;
+  const { title, description } = wp.generalSettings;
 
-  const categories = data.allWordpressPost.edges
-    .map(edge => edge.node.categories)
-    .reduce((accumulator, cats) => accumulator.concat(cats), [])
-    .map(cate => cate.name)
-    .reduce((uniques, item) => (uniques.includes(item) ? uniques : [...uniques, item]), [])
-    .filter(title => title.toLowerCase() !== 'uncategorized');
+  const posts = wp.posts.edges.map(edge => edge.node);
+
+  const categories = wp.categories.edges
+    .map(edge => edge.node.name)
+    .filter(name => name !== 'Uncategorized');
 
   return (
-    <React.Fragment>
-      <Header title={parse(name)} menu={menu} subtitle={parse(description)}>
+    <>
+      <Header title={parse(title)} menu={menu} subtitle={parse(description)}>
         <Categories categories={categories} />
       </Header>
       <main className="container container--narrow js-blog-posts">
-        <Feed posts={data.allWordpressPost.edges} />
+        <Feed posts={posts} />
       </main>
       <Footer author={author} adminUrl={adminUrl} rss={rss} />
-    </React.Fragment>
+    </>
   );
 };
 
