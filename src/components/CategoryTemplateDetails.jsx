@@ -9,15 +9,19 @@ const CategoryTemplateDetails = props => {
   const { wp, site } = data;
   const { category } = pageContext;
   const { menu, author, adminUrl, rss } = site.siteMetadata;
+  const { pages } = wp;
 
   const categories = wp.categories.edges
     .map(edge => edge.node.name)
     .filter(name => name !== 'Uncategorized');
+
   const posts = wp.posts.edges.map(edge => edge.node);
+
+  const fullMenu = pages.edges.map(edge => edge.node).concat(menu);
 
   return (
     <>
-      <Header menu={menu} title={category}>
+      <Header menu={fullMenu} title={category}>
         <Categories categories={categories} />
       </Header>
       <main className="container container--narrow">

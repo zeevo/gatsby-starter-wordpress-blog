@@ -16,8 +16,6 @@ const PageTemplateDetails = props => {
 
   const fullMenu = pages.edges.map(edge => edge.node).concat(menu);
 
-  console.log(fullMenu);
-
   return (
     <>
       <Header

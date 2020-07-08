@@ -9,12 +9,14 @@ const PostTemplateDetails = props => {
   const { wp, site } = props.data;
   const { menu, author, adminUrl, rss } = site.siteMetadata;
   const { name } = author;
-  const { post, categories } = wp;
+  const { post, categories, pages } = wp;
   const { title, date, content, featuredImage } = post;
 
   const categoryNames = categories.edges
     .map(edge => edge.node.name)
     .filter(category => category !== 'Uncategorized');
+
+  const fullMenu = pages.edges.map(edge => edge.node).concat(menu);
 
   return (
     <>
@@ -23,7 +25,7 @@ const PostTemplateDetails = props => {
         background={featuredImage ? featuredImage.node.sourceUrl : background}
         title={title}
         subtitle={name}
-        menu={menu}
+        menu={fullMenu}
       >
         <Categories categories={categoryNames} />
       </Header>
