@@ -6,13 +6,13 @@ module.exports = {
     adminUrl: 'https://wp.zeevo.me/wp-login',
     menu: [
       {
-        label: 'Twitter',
-        path: 'https://twitter.com/zeevosec',
+        title: 'Twitter',
+        slug: 'https://twitter.com/zeevosec',
         external: true,
       },
       {
-        label: 'Home',
-        path: '/',
+        title: 'Home',
+        slug: '/',
         external: false,
       },
     ],

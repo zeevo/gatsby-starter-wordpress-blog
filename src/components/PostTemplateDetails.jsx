@@ -10,7 +10,7 @@ const PostTemplateDetails = props => {
   const { menu, author, adminUrl, rss } = site.siteMetadata;
   const { name } = author;
   const { post, categories } = wp;
-  const { title, date, content, featuredMedia } = post;
+  const { title, date, content, featuredImage } = post;
 
   const categoryNames = categories.edges
     .map(edge => edge.node.name)
@@ -20,7 +20,7 @@ const PostTemplateDetails = props => {
     <>
       <Header
         date={date}
-        background={featuredMedia ? featuredMedia.sourceUrl : background}
+        background={featuredImage ? featuredImage.node.sourceUrl : background}
         title={title}
         subtitle={name}
         menu={menu}

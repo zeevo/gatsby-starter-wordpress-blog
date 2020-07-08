@@ -7,17 +7,21 @@ import Footer from './Footer';
 const PageTemplateDetails = props => {
   const { site, wp } = props.data;
   const { menu, author, adminUrl, rss } = site.siteMetadata;
-  const { page, categories } = wp;
+  const { page, pages, categories } = wp;
   const { title, content, featuredMedia } = page;
 
   const categoryNames = categories.edges
     .map(edge => edge.node.name)
     .filter(name => name !== 'Uncategorized');
 
+  const fullMenu = pages.edges.map(edge => edge.node).concat(menu);
+
+  console.log(fullMenu);
+
   return (
     <>
       <Header
-        menu={menu}
+        menu={fullMenu}
         background={featuredMedia ? featuredMedia.source_url : background}
         title={title}
       >

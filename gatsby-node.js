@@ -78,13 +78,11 @@ exports.createPages = ({ graphql, actions }) => {
         });
 
         sortedPages.forEach(post => {
-          const { date, slug } = post;
-          const preSlug = moment(new Date(date)).format('YYYY/MM/DD');
-          const formattedURI = `${preSlug}/${slug}`;
+          const { slug } = post;
           createPage({
-            path: formattedURI,
+            path: slug,
             component: slash(pageTemplate),
-            context: { id: post.id, uri: formattedURI },
+            context: { id: post.id },
           });
         });
 

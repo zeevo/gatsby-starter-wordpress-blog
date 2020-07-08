@@ -34,9 +34,8 @@ export const pageQuery = graphql`
         adminUrl
         rss
         menu {
-          label
-          path
-          external
+          title
+          slug
         }
         author {
           name
@@ -54,6 +53,17 @@ export const pageQuery = graphql`
         id
         slug
         title
+        content
+      }
+      pages {
+        edges {
+          node {
+            id
+            date
+            slug
+            title
+          }
+        }
       }
       categories {
         edges {

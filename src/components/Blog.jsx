@@ -10,21 +10,24 @@ const Blog = props => {
   const { wp, site } = props.data;
 
   const { menu, author, adminUrl, rss } = site.siteMetadata;
-  const { title, description } = wp.generalSettings;
+  const { posts, pages, generalSettings } = wp;
+  const { title, description } = generalSettings;
 
-  const posts = wp.posts.edges.map(edge => edge.node);
+  const postNodes = posts.edges.map(edge => edge.node);
 
   const categories = wp.categories.edges
     .map(edge => edge.node.name)
     .filter(name => name !== 'Uncategorized');
 
+  const fullMenu = pages.edges.map(edge => edge.node).concat(menu);
+
   return (
     <>
-      <Header title={parse(title)} menu={menu} subtitle={parse(description)}>
+      <Header title={parse(title)} menu={fullMenu} subtitle={parse(description)}>
         <Categories categories={categories} />
       </Header>
       <main className="container container--narrow js-blog-posts">
-        <Feed posts={posts} />
+        <Feed posts={postNodes} />
       </main>
       <Footer author={author} adminUrl={adminUrl} rss={rss} />
     </>
