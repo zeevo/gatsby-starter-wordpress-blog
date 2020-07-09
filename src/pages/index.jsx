@@ -36,7 +36,7 @@ export const pageQuery = graphql`
         rss
         menu {
           title
-          slug
+          uri
           external
         }
         author {
@@ -52,50 +52,45 @@ export const pageQuery = graphql`
         title
         description
       }
+    }
 
-      posts {
-        edges {
-          node {
-            title
-            date
-            excerpt
-            slug
-            author {
-              node {
-                name
-              }
+    allWpPost {
+      edges {
+        node {
+          title
+          date
+          excerpt
+          slug
+          author {
+            node {
+              name
             }
-            categories {
-              edges {
-                node {
-                  name
-                }
-              }
+          }
+          categories {
+            nodes {
+              name
             }
-            featuredImage {
-              node {
-                sourceUrl
-                title
-              }
+          }
+          featuredImage {
+            node {
+              sourceUrl
+              title
             }
           }
         }
       }
-      pages {
-        edges {
-          node {
-            id
-            slug
-            title
-          }
+    }
+    allWpPage {
+      edges {
+        node {
+          uri
+          title
         }
       }
-      categories {
-        edges {
-          node {
-            name
-          }
-        }
+    }
+    allWpCategory {
+      nodes {
+        name
       }
     }
   }

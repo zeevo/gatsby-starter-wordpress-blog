@@ -6,17 +6,16 @@ import background from '../assets/background.jpg';
 import Footer from './Footer';
 
 const PostTemplateDetails = props => {
-  const { wp, site } = props.data;
+  const { site, wpPost, allWpCategory, allWpPage } = props.data;
   const { menu, author, adminUrl, rss } = site.siteMetadata;
   const { name } = author;
-  const { post, categories, pages } = wp;
-  const { title, date, content, featuredImage } = post;
+  const { title, date, content, featuredImage } = wpPost;
 
-  const categoryNames = categories.edges
-    .map(edge => edge.node.name)
+  const categoryNames = allWpCategory.nodes
+    .map(node => node.name)
     .filter(category => category !== 'Uncategorized');
 
-  const fullMenu = pages.edges.map(edge => edge.node).concat(menu);
+  const fullMenu = allWpPage.edges.map(edge => edge.node).concat(menu);
 
   return (
     <>

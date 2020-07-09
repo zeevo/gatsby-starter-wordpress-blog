@@ -15,40 +15,34 @@ exports.createPages = ({ graphql, actions }) => {
 
     graphql(`
       query {
-        wp {
-          posts {
-            edges {
-              node {
-                id
-                title
-                slug
-                date
-                categories {
-                  edges {
-                    node {
-                      name
-                    }
-                  }
+        allWpPost {
+          edges {
+            node {
+              id
+              title
+              slug
+              date
+              categories {
+                nodes {
+                  name
                 }
               }
             }
           }
-          pages {
-            edges {
-              node {
-                id
-                date
-                slug
-                title
-              }
+        }
+        allWpPage {
+          edges {
+            node {
+              id
+              date
+              uri
+              title
             }
           }
-          categories {
-            edges {
-              node {
-                name
-              }
-            }
+        }
+        allWpCategory {
+          nodes {
+            name
           }
         }
       }
@@ -57,12 +51,12 @@ exports.createPages = ({ graphql, actions }) => {
         console.log(result.errors);
         reject(result.errors);
       } else {
-        const { posts, pages, categories } = result.data.wp;
+        const { allWpPost, allWpPage, allWpCategory } = result.data;
 
-        const sortedPosts = posts.edges
+        const sortedPosts = allWpPost.edges
           .map(edge => edge.node)
           .sort((a, b) => new Date(a.date) - new Date(b.date));
-        const sortedPages = pages.edges
+        const sortedPages = allWpPage.edges
           .map(edge => edge.node)
           .sort((a, b) => new Date(a.date) - new Date(b.date));
 
@@ -78,16 +72,16 @@ exports.createPages = ({ graphql, actions }) => {
         });
 
         sortedPages.forEach(post => {
-          const { slug } = post;
+          const { uri } = post;
           createPage({
-            path: slug,
+            path: uri,
             component: slash(pageTemplate),
             context: { id: post.id },
           });
         });
 
-        categories.edges.forEach(edge => {
-          const name = edge.node.name;
+        allWpCategory.nodes.forEach(node => {
+          const name = node.name;
           const categoryPath = `/categories/${_.kebabCase(name)}/`;
           createPage({
             path: categoryPath,

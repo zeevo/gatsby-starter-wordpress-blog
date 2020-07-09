@@ -6,18 +6,17 @@ import Footer from './Footer';
 
 const CategoryTemplateDetails = props => {
   const { data, pageContext } = props;
-  const { wp, site } = data;
+  const { site, allWpPage, allWpPost, allWpCategory } = data;
   const { category } = pageContext;
   const { menu, author, adminUrl, rss } = site.siteMetadata;
-  const { pages } = wp;
 
-  const categories = wp.categories.edges
-    .map(edge => edge.node.name)
+  const categories = allWpCategory.nodes
+    .map(node => node.name)
     .filter(name => name !== 'Uncategorized');
 
-  const posts = wp.posts.edges.map(edge => edge.node);
+  const posts = allWpPost.edges.map(edge => edge.node);
 
-  const fullMenu = pages.edges.map(edge => edge.node).concat(menu);
+  const fullMenu = allWpPage.edges.map(edge => edge.node).concat(menu);
 
   return (
     <>

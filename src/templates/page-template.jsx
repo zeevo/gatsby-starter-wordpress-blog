@@ -1,15 +1,16 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
+
 import parse from 'html-react-parser';
 
 import Layout from '../components/Layout';
 import PageTemplateDetails from '../components/PageTemplateDetails';
 
 const PageTemplate = props => {
-  const { wp } = props.data;
+  const { wpPage, wp } = props.data;
   const { title } = wp.generalSettings;
-  const { title: postTitle, description = '', tags } = wp.page;
+  const { title: postTitle, description = '', tags } = wpPage;
 
   return (
     <Layout>
@@ -28,14 +29,15 @@ const PageTemplate = props => {
 export default PageTemplate;
 
 export const pageQuery = graphql`
-  query($id: ID!) {
+  query($id: String!) {
     site {
       siteMetadata {
         adminUrl
         rss
         menu {
           title
-          slug
+          uri
+          external
         }
         author {
           name
@@ -49,28 +51,24 @@ export const pageQuery = graphql`
         title
         description
       }
-      page(id: $id) {
-        id
-        slug
-        title
-        content
-      }
-      pages {
-        edges {
-          node {
-            id
-            date
-            slug
-            title
-          }
+    }
+    wpPage(id: { eq: $id }) {
+      id
+      slug
+      title
+      content
+    }
+    allWpPage {
+      edges {
+        node {
+          uri
+          title
         }
       }
-      categories {
-        edges {
-          node {
-            name
-          }
-        }
+    }
+    allWpCategory {
+      nodes {
+        name
       }
     }
   }

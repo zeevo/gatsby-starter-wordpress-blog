@@ -1,6 +1,9 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
+
+import parse from 'html-react-parser';
+
 import Layout from '../components/Layout';
 import CategoryTemplateDetails from '../components/CategoryTemplateDetails';
 
@@ -13,7 +16,7 @@ const CategoryTemplate = props => {
     <Layout>
       <div>
         <Helmet>
-          <title>{`${category} - ${title}`}</title>
+          <title>{`${category} - ${parse(title)}`}</title>
           <meta name="description" content={`${title} - ${category}`} />
         </Helmet>
         <CategoryTemplateDetails {...props} />
@@ -32,7 +35,7 @@ export const pageQuery = graphql`
         rss
         menu {
           title
-          slug
+          uri
           external
         }
         author {
@@ -47,48 +50,44 @@ export const pageQuery = graphql`
         title
         description
       }
-      posts(where: { categoryName: $category }) {
-        edges {
-          node {
-            title
-            date
-            excerpt
-            slug
-            author {
-              node {
-                name
-              }
+    }
+    allWpPost(filter: { categories: { nodes: { elemMatch: { name: { eq: $category } } } } }) {
+      edges {
+        node {
+          title
+          date
+          excerpt
+          slug
+          author {
+            node {
+              name
             }
-            categories {
-              edges {
-                node {
-                  name
-                }
-              }
+          }
+          categories {
+            nodes {
+              name
             }
-            featuredImage {
-              node {
-                sourceUrl
-                title
-              }
+          }
+          featuredImage {
+            node {
+              sourceUrl
+              title
             }
           }
         }
       }
-      pages {
-        edges {
-          node {
-            slug
-            title
-          }
+    }
+    allWpPage {
+      edges {
+        node {
+          uri
+          title
         }
       }
-      categories {
-        edges {
-          node {
-            name
-          }
-        }
+    }
+    allWpCategory {
+      nodes {
+        name
       }
     }
   }

@@ -5,16 +5,15 @@ import background from '../assets/background.jpg';
 import Footer from './Footer';
 
 const PageTemplateDetails = props => {
-  const { site, wp } = props.data;
+  const { site, allWpPage, wpPage, allWpCategory } = props.data;
   const { menu, author, adminUrl, rss } = site.siteMetadata;
-  const { page, pages, categories } = wp;
-  const { title, content, featuredMedia } = page;
+  const { title, content, featuredMedia } = wpPage;
 
-  const categoryNames = categories.edges
-    .map(edge => edge.node.name)
+  const categoryNames = allWpCategory.nodes
+    .map(node => node.name)
     .filter(name => name !== 'Uncategorized');
 
-  const fullMenu = pages.edges.map(edge => edge.node).concat(menu);
+  const fullMenu = allWpPage.edges.map(edge => edge.node).concat(menu);
 
   return (
     <>

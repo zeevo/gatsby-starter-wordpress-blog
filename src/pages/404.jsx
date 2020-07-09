@@ -5,15 +5,18 @@ import Header from '../components/Header';
 import Categories from '../components/Categories';
 
 const NotFoundRoute = props => {
-  const { site, wp } = props.data;
+  const { site, allWpPage, allWpCategory } = props.data;
   const { menu } = site.siteMetadata;
-  const categories = wp.categories.edges
-    .map(edge => edge.node.name)
+
+  const categories = allWpCategory.nodes
+    .map(node => node.name)
     .filter(name => name !== 'Uncategorized');
+
+  const fullMenu = allWpPage.edges.map(edge => edge.node).concat(menu);
 
   return (
     <Layout>
-      <Header menu={menu} title="Page not found...">
+      <Header menu={fullMenu} title="Page not found...">
         <Categories categories={categories} />
       </Header>
       <article className="post">
@@ -37,7 +40,7 @@ export const pageQuery = graphql`
         rss
         menu {
           title
-          slug
+          uri
           external
         }
         author {
@@ -46,12 +49,16 @@ export const pageQuery = graphql`
         }
       }
     }
-    wp {
-      categories {
-        edges {
-          node {
-            name
-          }
+    allWpCategory {
+      nodes {
+        name
+      }
+    }
+    allWpPage {
+      edges {
+        node {
+          uri
+          title
         }
       }
     }

@@ -7,13 +7,12 @@ module.exports = {
     menu: [
       {
         title: 'Twitter',
-        slug: 'https://twitter.com/zeevosec',
+        uri: 'https://twitter.com/zeevosec',
         external: true,
       },
       {
         title: 'Home',
-        slug: '/',
-        external: false,
+        uri: '/',
       },
     ],
     author: {
@@ -28,14 +27,28 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
-      resolve: 'gatsby-source-graphql',
+      resolve: `gatsby-source-wordpress-experimental`,
       options: {
-        // This type will contain remote schema Query type
-        typeName: `WPGraphQL`,
-        // This is field under which it's accessible
-        fieldName: `wp`,
-        // Url to query from
-        url: `https://wp.zeevo.me/graphql`,
+        url: process.env.WPGRAPHQL_URL || `https://wp.zeevo.me/graphql`,
+        verbose: true,
+        develop: {
+          hardCacheMediaFiles: true,
+        },
+        debug: {
+          graphql: {
+            writeQueriesToDisk: true,
+          },
+        },
+        type: {
+          Post: {
+            limit:
+              process.env.NODE_ENV === `development`
+                ? // Lets just pull 50 posts in development to make it easy on ourselves.
+                  50
+                : // max of 50k posts
+                  50000,
+          },
+        },
       },
     },
     {
