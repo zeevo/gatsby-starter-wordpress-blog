@@ -34,8 +34,6 @@ export const pageQuery = graphql`
   query NotFoundQuery {
     site {
       siteMetadata {
-        title
-        subtitle
         adminUrl
         rss
         menu {

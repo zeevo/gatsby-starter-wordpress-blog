@@ -1,33 +1,34 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
+
 import parse from 'html-react-parser';
 
 import Layout from '../components/Layout';
-import Blog from '../components/Blog';
+import TagTemplateDetails from '../components/TagTemplateDetails';
 
-const IndexRoute = props => {
-  const { wp } = props.data;
-  const { title, description } = wp.generalSettings;
+const TagTemplate = props => {
+  const { data, pageContext } = props;
+  const { title } = data.wp.generalSettings;
+  const { tag } = pageContext;
 
   return (
     <Layout>
       <div>
         <Helmet>
-          <title>{parse(title)}</title>
-          <meta name="description" content={parse(description)} />
+          <title>{`${tag} - ${parse(title)}`}</title>
+          <meta name="description" content={`${title} - ${tag}`} />
         </Helmet>
-        <div />
-        <Blog {...props} />
+        <TagTemplateDetails {...props} />
       </div>
     </Layout>
   );
 };
 
-export default IndexRoute;
+export default TagTemplate;
 
 export const pageQuery = graphql`
-  query {
+  query($tag: String!) {
     site {
       siteMetadata {
         adminUrl
@@ -44,15 +45,13 @@ export const pageQuery = graphql`
         }
       }
     }
-
     wp {
       generalSettings {
         title
         description
       }
     }
-
-    allWpPost {
+    allWpPost(filter: { tags: { nodes: { elemMatch: { name: { eq: $tag } } } } }) {
       edges {
         node {
           title

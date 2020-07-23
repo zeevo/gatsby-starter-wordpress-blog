@@ -3,7 +3,6 @@ const Promise = require('bluebird');
 const path = require('path');
 const slash = require('slash');
 const moment = require('moment');
-const config = require('./gatsby-config');
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
@@ -12,6 +11,7 @@ exports.createPages = ({ graphql, actions }) => {
     const postTemplate = path.resolve('./src/templates/post-template.jsx');
     const pageTemplate = path.resolve('./src/templates/page-template.jsx');
     const categoryTemplate = path.resolve('./src/templates/category-template.jsx');
+    const tagTemplate = path.resolve('./src/templates/tag-template.jsx');
 
     graphql(`
       query {
@@ -45,13 +45,18 @@ exports.createPages = ({ graphql, actions }) => {
             name
           }
         }
+        allWpTag {
+          nodes {
+            name
+          }
+        }
       }
     `).then(result => {
       if (result.errors) {
         console.log(result.errors);
         reject(result.errors);
       } else {
-        const { allWpPost, allWpPage, allWpCategory } = result.data;
+        const { allWpPost, allWpPage, allWpCategory, allWpTag } = result.data;
 
         const sortedPosts = allWpPost.edges
           .map(edge => edge.node)
@@ -87,6 +92,16 @@ exports.createPages = ({ graphql, actions }) => {
             path: categoryPath,
             component: categoryTemplate,
             context: { category: name },
+          });
+        });
+
+        allWpTag.nodes.forEach(node => {
+          const name = node.name;
+          const tagPath = `/tag/${_.kebabCase(name)}/`;
+          createPage({
+            path: tagPath,
+            component: tagTemplate,
+            context: { tag: name },
           });
         });
 

@@ -7,12 +7,8 @@ const Avatar = props => {
       <a href={twitter}>
         <img src={avatar} alt="avatar" style={{ marginRight: '10px', width: '50px' }} />
       </a>
-      <p style={{ maxWidth: '310px' }}>
-        Personal Blog by{' '}
-        <a style={{ fontWeight: 'bold' }} href={twitter}>
-          {name}
-        </a>
-        . {motto}
+      <p className="header__tab__link faded faded--60" style={{ maxWidth: '3600px' }}>
+        <a href={twitter}>Personal Blog by {name}</a>. {motto}
       </p>
     </div>
   );

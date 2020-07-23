@@ -34,8 +34,6 @@ export const pageQuery = graphql`
   query($id: String!) {
     site {
       siteMetadata {
-        title
-        subtitle
         adminUrl
         rss
         menu {

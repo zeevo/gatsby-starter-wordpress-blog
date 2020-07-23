@@ -11,13 +11,7 @@ const Feed = props => {
       </p>
     );
   }
-  return (
-    <>
-      {posts.map(post => (
-        <PostPreview key={post.slug} post={post} />
-      ))}
-    </>
-  );
+  return posts.map(post => <PostPreview key={post.slug} post={post} />);
 };
 
 export default Feed;

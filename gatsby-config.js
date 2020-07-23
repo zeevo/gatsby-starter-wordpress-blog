@@ -1,9 +1,9 @@
+require('dotenv').config();
+
 module.exports = {
   siteMetadata: {
-    title: `WP GraphQL Gatsby Starter`,
-    subtitle: `Get started...`,
     rss: '/rss.xml',
-    adminUrl: 'https://wp.zeevo.me/wp-login',
+    adminUrl: process.env.WP_ADMIN_URL, // Something like https://mywpsite.com/wp-login
     menu: [
       {
         title: 'Twitter',
@@ -29,7 +29,7 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress-experimental`,
       options: {
-        url: process.env.WPGRAPHQL_URL || `https://wp.zeevo.me/graphql`,
+        url: process.env.WPGRAPHQL_URL,
         verbose: true,
         develop: {
           hardCacheMediaFiles: true,
