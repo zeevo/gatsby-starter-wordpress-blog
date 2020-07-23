@@ -6,6 +6,7 @@ const Footer = props => {
   const { author, adminUrl, rss } = props;
   const { twitter, avatar, motto, name } = author;
 
+  console.log(adminUrl);
   return (
     <footer className="container container--narrow js-blog-posts" style={{ marginBottom: '10px' }}>
       <Avatar avatar={avatar} motto={motto} name={name} twitter={twitter} />

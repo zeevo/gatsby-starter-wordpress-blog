@@ -6,36 +6,22 @@ Another blog starter with enough features to be production ready out of the box
 
 ## Setup
 
-1. Configure `gastby-config.js`
+### Configure `env` and `gastby-config.js`
 
-```js
-    {
-      resolve: 'gatsby-source-wordpress',
-      options: {
-        baseUrl: 'http://wptestgatsby.local/', // Change me to your wordpress location
-        protocol: 'http', // Me too!
-        hostingWPCOM: false,
-        useACF: true,
-        verboseOutput: false,
-      },
-    },
+Make a `.env` file at the root of this project with your WPGraphQL endpoint and WP Admin endpoint:
+
+Example:
+
 ```
-
-2. Configure [Wordpress ACF](https://www.advancedcustomfields.com/)
-
-   There is **one** ACF field you need to add for this app to function.
-
-   - **description**
-
-     - _type_ - text
-     - _name_ - desciption
-     - _required_ - yes
-     - _location_ - posts or pages
+# .env
+WPGRAPHQL_URL=https://mywpsite.com/graphql
+WP_ADMIN_URL=https//mywpsite.com/wp-login
+```
 
 ## Features
 
-- Easily have custom background images on a post by post basis
-- Source posts from Markdown
+- Easily have custom background images on a post by post basis by included a Wordpress Featured Image
+- Source posts from Wordpress using WPGraphQL
 - High performance
 - Config first setup
 - Extendable
@@ -50,7 +36,7 @@ Another blog starter with enough features to be production ready out of the box
 
     ```shell
     # create a new Gatsby site using the blog starter
-    gatsby new my-blog-starter https://github.com/zeevosec/gatsby-starter-zeevo
+    gatsby new my-blog-starter https://github.com/zeevosec/gatsby-starter-wordpress-zeevo
     ```
 
 1.  **Start developing.**
@@ -61,14 +47,6 @@ Another blog starter with enough features to be production ready out of the box
     cd my-blog-starter/
     gatsby develop
     ```
-
-1.  **Open the source code and start editing!**
-
-    Your site is now running at `http://localhost:8000`!
-
-    _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
-
-    Open the `my-blog-starter` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
 
 ## 🧐 What's inside?
 
