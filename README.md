@@ -1,6 +1,6 @@
 ![Home Page](./docs/homepage.png)
 
-# Gatsby Starter by Zeevo
+# Gatsby Starter Blog
 
 Another blog starter with enough features to be production ready out of the box
 
@@ -36,7 +36,7 @@ WP_ADMIN_URL=https//mywpsite.com/wp-login
 
     ```shell
     # create a new Gatsby site using the blog starter
-    gatsby new my-blog-starter https://github.com/zeevosec/gatsby-starter-wordpress-zeevo
+    gatsby new my-blog-starter https://github.com/zeevosec/gatsby-starter-wordpress-blog
     ```
 
 1.  **Start developing.**

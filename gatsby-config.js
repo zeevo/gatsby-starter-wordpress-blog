@@ -54,7 +54,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-wordpress-zeevo`,
+        name: `gatsby-starter-wordpress-blog`,
         short_name: `starter`,
         start_url: `/`,
         background_color: `#663399`,

@@ -1,6 +1,6 @@
 {
   "version": "3.0.0",
-  "name": "gatsby-starter-wordpress-zeevo",
+  "name": "gatsby-starter-wordpress-blog",
   "description": "A Gatsby starter blog",
   "main": "n/a",
   "scripts": {
@@ -12,7 +12,7 @@
     "format": "prettier --write './*.js' 'src/**/*.js' 'src/**/*.jsx'",
     "prettier": "prettier --write '{,!(node_modules|assets)/**/}*.js*'"
   },
-  "repository": "git+https://github.com/zeevosec/gatsby-starter-wordpress-zeevo",
+  "repository": "git+https://github.com/zeevosec/gatsby-starter-wordpress-blog",
   "keywords": [
     "gatsby",
     "blog",
