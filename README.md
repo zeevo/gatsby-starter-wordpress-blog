@@ -4,20 +4,6 @@
 
 Another blog starter with enough features to be production ready out of the box
 
-## Setup
-
-### Configure `env` and `gastby-config.js`
-
-Make a `.env` file at the root of this project with your WPGraphQL endpoint and WP Admin endpoint:
-
-Example:
-
-```
-# .env
-WPGRAPHQL_URL=https://mywpsite.com/graphql
-WP_ADMIN_URL=https//mywpsite.com/wp-login
-```
-
 ## Features
 
 - Easily have custom background images on a post by post basis by included a Wordpress Featured Image
@@ -39,7 +25,20 @@ WP_ADMIN_URL=https//mywpsite.com/wp-login
     gatsby new my-blog-starter https://github.com/zeevosec/gatsby-starter-wordpress-blog
     ```
 
-1.  **Start developing.**
+2. **Configure your environment**
+
+    Make a `.env` file at the root of this project with your WPGraphQL endpoint and WP Admin endpoint:
+
+    Example:
+
+    ```
+    # .env
+    WPGRAPHQL_URL=https://mywpsite.com/graphql
+    WP_ADMIN_URL=https//mywpsite.com/wp-login
+    ```
+
+
+3.  **Start developing.**
 
     Navigate into your new site’s directory and start it up.
 
