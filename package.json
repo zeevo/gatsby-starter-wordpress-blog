@@ -23,7 +23,7 @@
   "author": "Shane O'Neill <oneill.shane.h@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "gatsby": "^2.19.7",
+    "gatsby": "^4.25.7",
     "gatsby-image": "^2.2.39",
     "gatsby-plugin-google-analytics": "^2.1.35",
     "gatsby-plugin-manifest": "^2.2.39",
